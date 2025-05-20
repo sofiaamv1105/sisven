@@ -13,7 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        $categories = DB::table('categories')->get();
+        return response()->json(['categories' => $categories]);
     }
 
     /**
@@ -21,12 +22,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:80',
-            'description' => 'required|string',
-        ]);
+        $category = new Category();
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->save();
 
-        return Category::create($request->all());
+        return response()->json(['category' => $category]);
+
     }
 
     /**
@@ -34,7 +36,8 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::find($id);
+        return response()->json(['category' => $category]);
     }
 
     /**
@@ -42,14 +45,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:80',
-            'description' => 'required|string',
-        ]);
+        $category = Category::find($id);
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->save();
 
-        $category = Category::findOrFail($id);
-        $category->update($request->all());
-        return $category;
+        return response()->json(['category' => $category]);
     }
 
     /**
@@ -57,8 +58,10 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::find($id);
         $category->delete();
-        return response()->noContent();
+
+        $categories = DB::table('categories')->get();
+        return response()->json(['categories' => $categories, 'success' => true]);
     }
 }
