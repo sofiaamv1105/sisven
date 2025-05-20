@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\PayModeController;
+use App\Http\Controllers\api\CustomerController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -27,3 +28,9 @@ Route::post('/pay_modes', [PayModeController::class, 'store'])->name('pay_modes.
 Route::delete('/pay_modes/{pay_mode}', [PayModeController::class, 'destroy'])->name('pay_modes.destroy');
 Route::get('/pay_modes/{pay_mode}', [PayModeController::class, 'show'])->name('pay_modes.show');
 Route::put('/pay_modes/{pay_mode}', [PayModeController::class, 'update'])->name('pay_modes.update');
+
+Route::get('/customers', [CustomerController::class, 'index'])->name('customers');
+Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
+Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
