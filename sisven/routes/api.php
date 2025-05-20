@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\ProductController;
+use App\Http\Controllers\api\PayModeController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -20,3 +21,9 @@ Route::post('/products', [ProductController::class, 'store'])->name('products.st
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+
+Route::get('/pay_modes', [PayModeController::class, 'index'])->name('pay_modes');
+Route::post('/pay_modes', [PayModeController::class, 'store'])->name('pay_modes.store');
+Route::delete('/pay_modes/{pay_mode}', [PayModeController::class, 'destroy'])->name('pay_modes.destroy');
+Route::get('/pay_modes/{pay_mode}', [PayModeController::class, 'show'])->name('pay_modes.show');
+Route::put('/pay_modes/{pay_mode}', [PayModeController::class, 'update'])->name('pay_modes.update');
