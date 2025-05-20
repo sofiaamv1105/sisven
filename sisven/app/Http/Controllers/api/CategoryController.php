@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -14,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = DB::table('categories')->get();
-        return response()->json(['categories' => $categories]);
+        return json_encode(['categories' => $categories]);
     }
 
     /**
@@ -27,7 +28,7 @@ class CategoryController extends Controller
         $category->description = $request->description;
         $category->save();
 
-        return response()->json(['category' => $category]);
+        return json_encode(['category' => $category]);
 
     }
 
@@ -37,7 +38,7 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $category = Category::find($id);
-        return response()->json(['category' => $category]);
+        return json_encode(['category' => $category]);
     }
 
     /**
@@ -50,7 +51,7 @@ class CategoryController extends Controller
         $category->description = $request->description;
         $category->save();
 
-        return response()->json(['category' => $category]);
+        return json_encode(['category' => $category]);
     }
 
     /**
@@ -62,6 +63,6 @@ class CategoryController extends Controller
         $category->delete();
 
         $categories = DB::table('categories')->get();
-        return response()->json(['categories' => $categories, 'success' => true]);
+        return json_encode(['categories' => $categories, 'success' => true]);
     }
 }
