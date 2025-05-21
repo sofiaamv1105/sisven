@@ -23,14 +23,17 @@ class PayModeController extends Controller
      */
     public function store(Request $request)
     {
-        $payMode = new PayMode();
-        $payMode->name = $request->name;
-        $payMode->observation = $request->observation;
-        $payMode->save();
+        try {
+            $payMode = new PayMode();
+            $payMode->name = $request->name;
+            $payMode->observation = $request->observation;
+            $payMode->save();
 
-        return json_encode(['pay_mode' => $payMode]);
+            return response()->json(['pay_mode' => $payMode], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-
 
     /**
      * Display the specified resource.

@@ -9,6 +9,7 @@ class PayMode extends Model
 {
     use HasFactory;
 
+    protected $table = 'pay_mode';  // <- aquí el nombre real
     protected $fillable = [
         'name',
         'observation',

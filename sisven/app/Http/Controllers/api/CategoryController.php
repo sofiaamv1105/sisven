@@ -57,12 +57,24 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $category = Category::find($id);
-        $category->delete();
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();
 
-        $categories = DB::table('categories')->get();
-        return json_encode(['categories' => $categories, 'success' => true]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Categoría eliminada correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'No se pudo eliminar la categoría.',
+                'details' => $e->getMessage()
+            ], 500);
+        }
     }
+
+
 }

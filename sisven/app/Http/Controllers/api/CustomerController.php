@@ -22,17 +22,19 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = new Customer();
-        $customer->document_number = $request->document_number;
-        $customer->first_name = $request->first_name;
-        $customer->last_name = $request->last_name;
-        $customer->address = $request->address;
-        $customer->birthday = $request->birthday;
-        $customer->phone_number = $request->phone_number;
-        $customer->email = $request->email;
-        $customer->save();
+        $validated = $request->validate([
+            'document_number' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'address' => 'required|string',
+            'birthday' => 'required|date',
+            'phone_number' => 'required|string',
+            'email' => 'required|email'
+        ]);
 
-        return json_encode(['customer' => $customer]);
+        $customer = Customer::create($validated);
+
+        return response()->json($customer, 201);
     }
 
     /**
